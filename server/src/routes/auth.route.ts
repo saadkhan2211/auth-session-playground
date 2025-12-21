@@ -5,7 +5,8 @@ import Auth from "../controllers/auth.controller";
 
 const router = Router();
 
-router.post("/loign", validate(loginSchema), Auth.login);
+router.post("/login", validate(loginSchema), Auth.login);
 router.post("/signup", validate(signupSchema), Auth.signup);
+router.post("/refreshToken", Auth.refresh);
 
 export default router;
