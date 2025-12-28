@@ -13,7 +13,7 @@ import {
   verifyRefreshToken,
 } from "../libs/jwt";
 
-export const login = async (req: Request, res: Response) => {
+const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
 
@@ -77,6 +77,8 @@ export const login = async (req: Request, res: Response) => {
 const signup = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
+    console.log(req.body);
+
     const user = await findUserByEmail(email);
     if (user) {
       return res.status(400).json({

@@ -15,10 +15,10 @@ const Signup = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await api.post("/signup");
+      await api.post("/signup", user);
       alert("Signup Successful!");
     } catch (error) {
-      alert("Signup Failed!");
+      alert(error);
     }
   };
 
