@@ -8,7 +8,7 @@ type UserState = {
 };
 
 const Login = () => {
-  const { setAuth } = useAuth();
+  const { dispatch } = useAuth();
   const [user, setUser] = useState<UserState>({
     email: "",
     password: "",
@@ -16,18 +16,13 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setAuth((prev: any) => ({ ...prev, loading: true }));
+    dispatch({ type: "LOGIN_START" });
     try {
-      const response = await api.post("/login");
+      const response = await api.post("/login", user);
 
-      setAuth({
-        accessToken: response.data.accessToken,
-        isAuthenticated: true,
-        loading: false,
-      });
+      dispatch({ type: "LOGIN_SUCCESS", payload: response.data.token });
     } catch (error) {
       alert("Login Failed!");
-      setAuth((prev: any) => ({ ...prev, loading: false }));
     }
   };
 

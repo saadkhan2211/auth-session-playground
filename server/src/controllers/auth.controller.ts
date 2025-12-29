@@ -27,6 +27,7 @@ const login = async (req: Request, res: Response) => {
     }
 
     const validatePassword = await bcrypt.compare(password, checkUser.password);
+
     if (!validatePassword) {
       return res.status(400).json({
         success: false,
@@ -53,13 +54,6 @@ const login = async (req: Request, res: Response) => {
       });
     }
 
-    res.cookie("refreshToken", refreshToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
-
     return res.status(200).json({
       success: true,
       message: "Login Successful",
@@ -77,8 +71,6 @@ const login = async (req: Request, res: Response) => {
 const signup = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
-    console.log(req.body);
-
     const user = await findUserByEmail(email);
     if (user) {
       return res.status(400).json({
